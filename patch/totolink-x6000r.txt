@@ -2,10 +2,12 @@
 define Device/totolink_x6000r
   DEVICE_VENDOR := TOTOLINK
   DEVICE_MODEL := X6000R
-  DEVICE_DTS := mt7981b-totolink-x6000r.dts
+  DEVICE_VARIANT := v1
+  DEVICE_DTS := mt7981b-totolink-x6000r
   DEVICE_DTS_DIR := ../dts
   IMAGES := sysupgrade.bin
   IMAGE_SIZE := 15424k
+  SUPPORTED_DEVICES += R31
   KERNEL := kernel-bin | lzma | \
 	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
   KERNEL_INITRAMFS := kernel-bin | lzma | \
