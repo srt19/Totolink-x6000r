@@ -57,6 +57,10 @@ jobs:
       run: |
         mv patch/mt7981b-totolink-x6000r.dts openwrt/target/linux/mediatek/dts
         cat patch/totolink-x6000r.txt >> openwrt/target/linux/mediatek/image/filogic.mk
+        mv -f patch/01_leds openwrt/target/linux/mediatek/filogic/base-files/etc/board.d/
+        mv -f patch/02_network openwrt/target/linux/mediatek/filogic/base-files/etc/board.d/
+        mv -f patch/11_fix_wifi_mac openwrt/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/
+        mv -f patch/platform.sh openwrt/target/linux/mediatek/filogic/base-files/lib/upgrade/
       
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
