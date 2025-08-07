@@ -1,5 +1,5 @@
 
-define Device/totolink_x6000r
+define Device/totolink-x6000r
   DEVICE_VENDOR := TOTOLINK
   DEVICE_MODEL := X6000R
   DEVICE_DTS := mt7981b-totolink-x6000r
