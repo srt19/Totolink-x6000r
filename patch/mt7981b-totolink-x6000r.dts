@@ -7,8 +7,17 @@
 #include "mt7981b.dtsi"
 
 / {
+<<<<<<< HEAD
 	model = "TOTOLINK X6000R";
 	compatible = "totolink,x6000r", "mediatek,mt7981";
+=======
+	interrupt-parent = <0x01>;
+	#address-cells = <0x02>;
+	#size-cells = <0x02>;
+	model = "TOTOLINK X6000R";
+	compatible = "totolink,x6000r", "mediatek,mt7981";
+
+>>>>>>> 1b62906f5f5182f144a88b51ac229c43c6dbb1e1
 
 	aliases {
 		label-mac-device = &gmac0;
