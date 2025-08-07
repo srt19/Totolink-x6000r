@@ -1,11 +1,12 @@
 /dts-v1/;
 
 / {
-	compatible = "carystudio,04499a-spi-nor";
 	interrupt-parent = <0x01>;
 	#address-cells = <0x02>;
 	#size-cells = <0x02>;
-	model = "CaryStudio 04499A Nor";
+	model = "TOTOLINK X6000R";
+	compatible = "totolink,x6000r", "mediatek,mt7981";
+
 
 	cpus {
 		#address-cells = <0x01>;
