@@ -27,27 +27,37 @@
         compatible = "gpio-keys";
 
         reset {
-			label = "reset";
-			linux,code = <KEY_RESTART>;
-			gpios = <&pio 4 GPIO_ACTIVE_LOW>;
-		};
+            label = "reset";
+            linux,code = <KEY_RESTART>;
+            gpios = <&pio 0 GPIO_ACTIVE_LOW>;
+        };
 
-		wps {
-			label = "wps";
-			linux,code = <KEY_WPS_BUTTON>;
-			gpios = <&pio 0 GPIO_ACTIVE_LOW>;
-		};
+        wps {
+            label = "wps";
+            linux,code = <KEY_WPS_BUTTON>;
+            gpios = <&pio 1 GPIO_ACTIVE_LOW>;
+        };
     };
 
     gpio-leds {
         compatible = "gpio-leds";
 
-        led_status: status_blue {
+        led-0 {
+            color = <LED_COLOR_ID_GREEN>;
+            gpios = <&pio 8 GPIO_ACTIVE_LOW>;
+        };
+
+		led-1 {
+            color = <LED_COLOR_ID_RED>;
+            gpios = <&pio 13 GPIO_ACTIVE_LOW>;
+        };
+
+        led_status: led-2 {
 			function = LED_FUNCTION_STATUS;
 			color = <LED_COLOR_ID_BLUE>;
-			gpios = <&pio 18 GPIO_ACTIVE_LOW>;
+            gpios = <&pio 15 GPIO_ACTIVE_LOW>;
             default-state = "on";
-		};
+        };
     };
 };
 
@@ -64,10 +74,10 @@
 	gmac0: mac@0 {
 		compatible = "mediatek,eth-mac";
 		reg = <0>;
-		phy-connection-type = "2500base-x";
+		phy-mode = "2500base-x";
 
+		nvmem-cells = <&macaddr_factory_e006>;
 		nvmem-cell-names = "mac-address";
-		nvmem-cells = <&macaddr_factory_2a>;
 		fixed-link {
 			speed = <2500>;
 			full-duplex;
@@ -79,7 +89,7 @@
 		compatible = "mediatek,eth-mac";
 		reg = <1>;
 		phy-mode = "gmii";
-		nvmem-cells = <&macaddr_factory_24>;
+		nvmem-cells = <&macaddr_factory_e01a>;
 		nvmem-cell-names = "mac-address";
 	};
 
@@ -147,15 +157,15 @@
 					#size-cells = <1>;
 
 					eeprom_factory_0: eeprom@0 {
-						reg = <0x0 0xe00>;
-					}
-
-					macaddr_factory_24: macaddr@24 {
-						reg = <0x11 0x14>;
+						reg = <0x0 0x1000>;
 					};
 
-					macaddr_factory_2a: macaddr@2a {
-						reg = <0x11 0x1a>;
+					macaddr_factory_e006: macaddr@e006 {
+						reg = <0xe006 0x6>;
+					};
+
+					macaddr_factory_e01a: macaddr@e01a {
+						reg = <0xe01a 0x6>;
 					};
 				};
 			};
@@ -167,6 +177,7 @@
 			};
 
 			partition@180000 {
+				compatible = "denx,fit";
 				label = "firmware";
 				reg = <0x180000 0xe00000>;
 			};
@@ -175,52 +186,50 @@
 };
 
 &pio {
-	spi0_flash_pins {
-			mux {
-				function = "spi";
-				groups = "spi0\0spi0_wp_hold";
-			};
-
-			conf-pu {
-				pins = "SPI0_CS", "SPI0_HOLD", "SPI0_WP";
-				drive-strength = <8>;
-				bias-pull-up = <103>;
-			};
-
-			conf-pd {
-				pins = "SPI0_CLK", "SPI0_MOSI", "SPI0_MISO";
-				drive-strength = <8>;
-				bias-pull-down = <103>;
-			};
-	};
-
-	spi1_flash_pins {
-			phandle = <20>;
-
-			mux {
-				function = "spi";
-				groups = "spi1_1";
-			};
-	};
-
-	spi2_flash_pins {
-			mux {
-				function = "spi";
-				groups = "spi2", "spi2_wp_hold";
-			};
-
-			conf-pu {
-				pins = "SPI2_CS", "SPI2_HOLD", "SPI2_WP";
-				drive-strength = <8>;
-				bias-pull-up = <103>;
-			};
-
-			conf-pd {
-				pins = "SPI2_CLK, "SPI2_MOSI", "SPI2_MISO";
-				drive-strength = <8>;
-				bias-pull-down = <103>;
-			};
+	spi0_flash_pins: spi0-pins {
+		mux {
+			function = "spi";
+			groups = "spi0", "spi0_wp_hold";
 		};
+
+		conf-pu {
+			pins = "SPI0_CS", "SPI0_HOLD", "SPI0_WP";
+			drive-strength = <8>;
+			bias-pull-up = <103>;
+		};
+
+		conf-pd {
+			pins = "SPI0_CLK", "SPI0_MOSI", "SPI0_MISO";
+			drive-strength = <8>;
+			bias-pull-down = <103>;
+		};
+	};
+
+	spi1_flash_pins: spi1-pins {
+		mux {
+			function = "spi";
+			groups = "spi1_1";
+		};
+	};
+
+	spi2_flash_pins: spi2-pins {
+		mux {
+			function = "spi";
+			groups = "spi2", "spi2_wp_hold";
+		};
+
+		conf-pu {
+			pins = "SPI2_CS", "SPI2_HOLD", "SPI2_WP";
+			drive-strength = <8>;
+			bias-pull-up = <103>;
+		};
+
+		conf-pd {
+			pins = "SPI2_CLK", "SPI2_MOSI", "SPI2_MISO";
+			drive-strength = <8>;
+			bias-pull-down = <103>;
+		};
+	};
 };
 
 &switch {
@@ -233,7 +242,7 @@
 			label = "wan";
 
 			nvmem-cell-names = "mac-address";
-			nvmem-cells = <&macaddr_factory_2a 1>;
+			nvmem-cells = <&macaddr_factory_e006>;
 		};
 
 		port@1 {
@@ -254,7 +263,7 @@
 		port@4 {
 			reg = <4>;
 			label = "lan4";
-		}
+		};
 	};
 };
 
