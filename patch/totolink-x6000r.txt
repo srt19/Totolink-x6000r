@@ -1,5 +1,5 @@
 
-define Device/totolink-x6000r
+define Device/totolink_x6000r
   DEVICE_VENDOR := TOTOLINK
   DEVICE_MODEL := X6000R
   DEVICE_DTS := mt7981b-totolink-x6000r
@@ -13,4 +13,4 @@ define Device/totolink-x6000r
   IMAGE/sysupgrade.bin := append-kernel | pad-to 128k | append-rootfs | pad-rootfs | check-size | append-metadata
   DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware
 endef
-TARGET_DEVICES += totolink-x6000r
+TARGET_DEVICES += totolink_x6000r
