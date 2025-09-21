@@ -1,9 +1,5 @@
 Totolink X6000R OpenWrt Firmware
 
-## Installation
-Flash OpenWrt sysupgrade image using OEM web ui
+Merged to Official OpenWrt repository [7cd10ad](https://github.com/openwrt/openwrt/commit/7cd10add2de3c8227cf7383c7ca5cf3b12eeb822)
 
-Or use the [recovery method ](https://openwrt.org/toh/totolink/x5000r#back_to_stock_firmware), flash the Openwrt sysupgrade image instead of the Original firmware
-
-## Back to stock firmware
-Same method as [Totolink X5000R](https://openwrt.org/toh/totolink/x5000r#back_to_stock_firmware)
+Use the [OpenWrt Firmware Selector](https://firmware-selector.openwrt.org/) to download the firmware
